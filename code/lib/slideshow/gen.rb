@@ -1,6 +1,3 @@
-
-
-
 module Slideshow
 
 class Gen
@@ -80,7 +77,7 @@ class Gen
   end
     
   def cache_dir
-    PLATFORM =~ /win32/ ? win32_cache_dir : File.join(File.expand_path("~"), ".slideshow")
+    RUBY_PLATFORM =~ /win32/ ? win32_cache_dir : File.join(File.expand_path("~"), ".slideshow")
   end
 
   def win32_cache_dir
@@ -103,7 +100,7 @@ class Gen
       end
     
       # make sure path exists
-      File.makedirs( @config_dir ) unless File.directory? @config_dir
+      FileUtils.mkdir( @config_dir ) unless File.directory? @config_dir
     end
     
     @config_dir
@@ -238,7 +235,7 @@ class Gen
     # make sure dest path exists
     dest_path = File.dirname( dest_full )
     logger.debug "dest_path=#{dest_path}"
-    File.makedirs( dest_path ) unless File.directory? dest_path
+    FileUtils.mkdir( dest_path ) unless File.directory? dest_path
     dest_full
   end
   
@@ -296,7 +293,7 @@ class Gen
     logger.debug "dlpath: #{dlbase}"
     logger.debug "pkgpath: #{pkgpath}"
   
-    File.makedirs( pkgpath ) unless File.directory? pkgpath 
+    FileUtils.mkdir( pkgpath ) unless File.directory? pkgpath
    
     puts "Fetching template package '#{basename}'"
     puts "  : from '#{dlbase}'"
@@ -319,7 +316,7 @@ class Gen
 
         # make sure path exists
         destpath = File.dirname( dest )
-        File.makedirs( destpath ) unless File.directory? destpath
+        FileUtils.mkdir( destpath ) unless File.directory? destpath
     
         src = "#{dlbase}/#{file}"
     
@@ -351,7 +348,7 @@ class Gen
     # expand output path in current dir and make sure output path exists
     outpath = File.expand_path( opts.output_path ) 
     logger.debug "outpath=#{outpath}"
-    File.makedirs( outpath ) unless File.directory? outpath 
+    FileUtils.mkdir( outpath ) unless File.directory? outpath
 
     manifest.each do |entry|
       dest   = entry[0]      
@@ -400,7 +397,7 @@ class Gen
     # expand output path in current dir and make sure output path exists
     outpath = File.expand_path( opts.output_path ) 
     logger.debug "outpath=#{outpath}"
-    File.makedirs( outpath ) unless File.directory? outpath 
+    FileUtils.mkdir( outpath ) unless File.directory? outpath
 
     dirname  = File.dirname( fn )    
     basename = File.basename( fn, '.*' )
@@ -463,7 +460,7 @@ class Gen
   
    # fix: allow comments in header too (#)
 
-  content_with_headers.each do |line|
+  content_with_headers.each_line do |line|
     if read_headers && line =~ /^\s*(\w[\w-]*)[ \t]*:[ \t]*(.*)/
       key = $1.downcase
       value = $2.strip
@@ -552,7 +549,7 @@ class Gen
       source = entry[1]
             
       puts "Copying to #{dest} from #{source}..."     
-      File.copy( source, with_output_path( dest, outpath ) )
+      FileUtils.cp( source, with_output_path( dest, outpath ) )
     end
   end
 

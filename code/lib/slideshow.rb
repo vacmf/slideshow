@@ -1,5 +1,3 @@
-$KCODE = 'utf'
-
 LIB_PATH = File.expand_path( File.dirname(__FILE__) )
 $:.unshift(LIB_PATH) 
 
@@ -8,7 +6,6 @@ require 'optparse'
 require 'erb'
 require 'logger'
 require 'fileutils'
-require 'ftools'
 require 'pp'
 require 'uri'
 require 'net/http'
