@@ -11,7 +11,7 @@ require 'uri'
 require 'net/http'
 
 # required gems
-require 'redcloth'
+require 'RedCloth'
 
 # own code
 require 'slideshow/opts'
@@ -19,7 +19,7 @@ require 'slideshow/gen'
 
 module Slideshow
 
-  VERSION = '0.8'
+  VERSION = '0.9.1'
 
   def Slideshow.main
     

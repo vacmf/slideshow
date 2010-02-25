@@ -1,18 +1,24 @@
-require 'hoe'
+require 'rake/gempackagetask'
 require './lib/slideshow.rb'
 
-Hoe.new('slideshow', Slideshow::VERSION) do |p|
-
+spec = Gem::Specification.new do |p|
+  p.name = 'vacmf-slideshow'
   p.summary = 'Slide Show (S9) - A Free Web Alternative to PowerPoint and KeyNote in Ruby'
-  p.url     = 'http://slideshow.rubyforge.org'
-  
-  p.author  = 'Gerald Bauer'
-  p.email   = 'webslideshow@googlegroups.com'
-  
-  p.extra_deps = [
+  p.description = File.read(File.join(File.dirname(__FILE__), 'README.txt'))
+
+  p.requirements = [
     ['RedCloth','>= 4.0.0'],
     ['BlueCloth','>= 1.0.0']
   ]
   
-  p.remote_rdoc_dir = 'doc' 
+  p.version = Slideshow::VERSION
+  p.author  = 'Gerald Bauer'
+  p.email   = 'webslideshow@googlegroups.com'
+  p.homepage     = 'http://slideshow.rubyforge.org'
+  p.platform = Gem::Platform::RUBY
+  p.required_ruby_version = '>=1.9'
+  p.files = Dir['**/**']
+  p.executables = ['slideshow']
+  p.has_rdoc = true
 end
+Rake::GemPackageTask.new(spec).define
